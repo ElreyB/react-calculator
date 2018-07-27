@@ -1,7 +1,7 @@
 import React from 'react';
 
-const Button = ({ width, height, text, value }) => (
-  <button style={{ width, height }} value={value}>
+const Button = ({ width, height, text, value, onClick }) => (
+  <button style={{ width, height }} value={value} onClick={onClick}>
     {text}
   </button>
 );
