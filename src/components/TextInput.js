@@ -1,8 +1,8 @@
 import React, { Fragment } from 'react';
 
-const TextInput = ({ height, width, userInput }) => (
+const TextInput = ({ className, userInput }) => (
   <Fragment>
-    <div style={{ height, width }} className="input">
+    <div className={className + ' input'}>
       <span className="input-span" value={userInput}>
         {userInput}
       </span>

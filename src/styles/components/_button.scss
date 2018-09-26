@@ -1,3 +1,13 @@
 button {
   font-size: $l-size;
 }
+
+.s-btn {
+  width: $btn-width-s;
+  height: $btn-height;
+}
+
+.xl-btn {
+  width: $btn-width-xl;
+  height: $btn-height;
+}

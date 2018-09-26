@@ -15,6 +15,7 @@ class App extends Component {
     this.handleClear = this.handleClear.bind(this);
     this.handleEnter = this.handleEnter.bind(this);
     this.handleMultiOperations = this.handleMultiOperations.bind(this);
+    this.handleDelete = this.handleDelete.bind(this);
   }
 
   handleDigits(e) {
@@ -49,8 +50,11 @@ class App extends Component {
 
   handleEnter() {
     this.setState(prevState => {
+      const userInput =
+        this.getAnswer(prevState.userInput, prevState.operation) ||
+        prevState.userInput;
       return {
-        userInput: this.getAnswer(prevState.userInput, prevState.operation),
+        userInput,
         operation: undefined
       };
     });
@@ -60,24 +64,33 @@ class App extends Component {
     this.setState(prevState => {
       return {
         userInput: '',
-        firstNum: 0,
-        secondNum: 0,
         operation: undefined
       };
     });
   }
 
+  handleDelete() {
+    this.setState(prevState => {
+      const userInput = prevState.userInput.slice(0, -1) || '';
+      return {
+        userInput
+      };
+    });
+  }
+
   getAnswer(eqString, operation) {
-    const numbers = eqString.split(operation);
+    const numbers = eqString.split(operation).map(num => Number(num));
     switch (operation) {
       case '+':
-        return Number(numbers[0]) + Number(numbers[1]);
+        return numbers[0] + numbers[1];
       case '-':
-        return Number(numbers[0]) - Number(numbers[1]);
+        return numbers[0] - numbers[1];
       case 'x':
-        return Number(numbers[0]) * Number(numbers[1]);
+        return numbers[0] * numbers[1];
       case '/':
-        return Number(numbers[0]) / Number(numbers[1]);
+        return numbers[0] / numbers[1];
+      default:
+        return undefined;
     }
   }
 
@@ -86,35 +99,27 @@ class App extends Component {
       <Fragment>
         <div className="container">
           <div className="cal-container">
-            <TextInput
-              width={'32rem'}
-              height={'8rem'}
-              userInput={this.state.userInput}
-            />
+            <TextInput className={'xl-btn'} userInput={this.state.userInput} />
             <Button
-              width={'8rem'}
-              height={'8rem'}
+              className={'s-btn'}
               text={7}
               value={7}
               onClick={this.handleDigits}
             />
             <Button
-              width={'8rem'}
-              height={'8rem'}
+              className={'s-btn'}
               text={8}
               value={8}
               onClick={this.handleDigits}
             />
             <Button
-              width={'8rem'}
-              height={'8rem'}
+              className={'s-btn'}
               text={9}
               value={9}
               onClick={this.handleDigits}
             />
             <Button
-              width={'8rem'}
-              height={'8rem'}
+              className={'s-btn'}
               text={'/'}
               value={'/'}
               onClick={
@@ -124,29 +129,25 @@ class App extends Component {
               }
             />
             <Button
-              width={'8rem'}
-              height={'8rem'}
+              className={'s-btn'}
               text={4}
               value={4}
               onClick={this.handleDigits}
             />
             <Button
-              width={'8rem'}
-              height={'8rem'}
+              className={'s-btn'}
               text={5}
               value={5}
               onClick={this.handleDigits}
             />
             <Button
-              width={'8rem'}
-              height={'8rem'}
+              className={'s-btn'}
               text={6}
               value={6}
               onClick={this.handleDigits}
             />
             <Button
-              width={'8rem'}
-              height={'8rem'}
+              className={'s-btn'}
               text={'x'}
               value={'x'}
               onClick={
@@ -156,29 +157,25 @@ class App extends Component {
               }
             />
             <Button
-              width={'8rem'}
-              height={'8rem'}
+              className={'s-btn'}
               text={1}
               value={1}
               onClick={this.handleDigits}
             />
             <Button
-              width={'8rem'}
-              height={'8rem'}
+              className={'s-btn'}
               text={2}
               value={2}
               onClick={this.handleDigits}
             />
             <Button
-              width={'8rem'}
-              height={'8rem'}
+              className={'s-btn'}
               text={3}
               value={3}
               onClick={this.handleDigits}
             />
             <Button
-              width={'8rem'}
-              height={'8rem'}
+              className={'s-btn'}
               text={'+'}
               value={'+'}
               onClick={
@@ -188,28 +185,23 @@ class App extends Component {
               }
             />
             <Button
-              width={'8rem'}
-              height={'8rem'}
-              text={'.'}
-              value={'.'}
-              onClick={this.handleDigits}
+              className={'s-btn'}
+              text={'DE'}
+              onClick={this.handleDelete}
             />
             <Button
-              width={'8rem'}
-              height={'8rem'}
+              className={'s-btn'}
               text={0}
               value={0}
               onClick={this.handleDigits}
             />
             <Button
-              width={'8rem'}
-              height={'8rem'}
+              className={'s-btn'}
               text={'CE'}
               onClick={this.handleClear}
             />
             <Button
-              width={'8rem'}
-              height={'8rem'}
+              className={'s-btn'}
               text={'-'}
               value={'-'}
               onClick={
@@ -219,8 +211,7 @@ class App extends Component {
               }
             />
             <Button
-              width={'32rem'}
-              height={'8rem'}
+              className={'xl-btn'}
               text={'='}
               value={'enter'}
               onClick={this.handleEnter}
